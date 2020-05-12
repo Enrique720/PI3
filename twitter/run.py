@@ -4,10 +4,10 @@ from tweepy import OAuthHandler
 import json
 import wget
 #Twitter API credentials
-consumer_key = "eYyvdAokGZI089xU1MIwQtzON"
-consumer_secret = "9R9n5vB76Q1x57fpFuiLlgSFAKizN6NoY5NZDAW5O8acNPMGvN"
-access_token = "1259734035422724096-XuxXZiC6GAiIWiWItm5mGSDSr5FbTG"
-access_secret = "XKoXbah03fpBdJGMyimX3QRF8jPTnmn8GBnFSMt0SdtMz"
+consumer_key = ""
+consumer_secret = ""
+access_token = ""
+access_secret = ""
 
 @classmethod
 def parse(cls, api, raw):
