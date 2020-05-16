@@ -1,8 +1,8 @@
-
 import tweepy
 import csv
 import pandas as pd
 import wget
+
 ####input your credentials here
 consumer_key = ""
 consumer_secret = ""
@@ -18,15 +18,31 @@ csvFile = open('ua.csv', 'a')
 #Use csv Writer
 csvWriter = csv.writer(csvFile)
 media_files = set()
-for tweet in tweepy.Cursor(api.search,q="#cusco",count=100,
+puntaje = 0
+lista= {}
+for tweet in tweepy.Cursor(api.search,q="#cusco",count=10,
                            lang="en",
                            since="2017-04-03").items():
     
     media = tweet.entities.get('media', [])
     if(len(media) > 0):
-        media_files.add(media[0]['media_url'])
-    print (tweet.created_at, tweet.text)
+        #print("favorite_count: " , tweet.favorite_count)
+        #print("retweet_count: " , tweet.retweet_count)       
+        puntaje += tweet.favorite_count
+        puntaje += tweet.retweet_count*2
+        lista[media[0]['media_url']] = puntaje
+        puntaje = 0
+        #print("--------------------------")
     csvWriter.writerow([tweet.created_at, tweet.text.encode('utf-8')])
 
-for media_file in media_files:
-    wget.download(media_file)
+
+sorted_lista = sorted(lista.items(), key=lambda kv: kv[1],reverse = True)
+
+i = 1
+for img in sorted_lista:
+    print("EL puntaje es: ",img[1])
+    wget.download(img[0])
+    if i == 3:
+        break
+    i += 1
+
